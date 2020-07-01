@@ -1,0 +1,99 @@
+﻿@model IEnumerable<ASP.Models.LibroSet>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+	<a asp-action="Create">Create New</a>
+</p>
+<div class="row mb-5">
+	<form asp-action="Index" method="get">
+		<div class="row mb-2">
+			<select name="clasificacionId" asp-items="ViewBag.list">
+				<option>Omitir</option>
+			</select>
+		</div>
+		<div class="row mb-2">
+			<select name="generoId" asp-items="ViewBag.gen">
+				<option>Omitir</option>
+			</select>
+		</div>
+		<button type="submit">Filtrar</button>
+	</form>
+</div>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Imagen)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Titulo)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Descripcion)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.StockDisponible)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.AutorAutor)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ClasificacionClasificacion)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.GeneroGenero)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					<img src=data:image/png;base64,@System.Convert.ToBase64String(item.Imagen) width="60" height="100" />
+				</td>
+				<td>
+					<a asp-action="Details" asp-route-id="@item.LibroId">@Html.DisplayFor(modelItem => item.Titulo)</a>
+					
+				</td>
+				<td>
+								 
+					<div id="@("demo"+item.LibroId)" class="collapse">
+						
+					</div>
+
+					<div id="demo" class="collapse show">
+						@Html.DisplayFor(modelItem => item.DescripcionCorta)
+						<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#@(" #demo"+item.LibroId)">Leer más</button>
+					</div>
+
+					<div id="demo" class="collapse">
+						@Html.DisplayFor(modelItem => item.Descripcion)
+						<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Leer menos</button>
+					</div>
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.StockDisponible)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.AutorAutor.Apellidos), @Html.DisplayFor(modelItem => item.AutorAutor.Nombre)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ClasificacionClasificacion.Descripcion)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.GeneroGenero.Descripcion)
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ASP.Models.PrestamoSet>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.LibroLibro)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.FechaInicio)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.FechaFin)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.FechaDevolucion)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			if (item.FechaFin.Date < DateTime.Now)
+			{
+
+	<td class="alert alert-danger">
+		@Html.DisplayFor(modelItem => item.LibroLibro.Titulo)
+	</td>
+	<td class="alert alert-danger">
+		@Html.DisplayFor(modelItem => item.FechaInicio)
+	</td>
+	<td class="alert alert-danger">
+		@Html.DisplayFor(modelItem => item.FechaFin)
+	</td>
+	<td class="alert alert-danger">
+		@Html.DisplayFor(modelItem => item.FechaDevolucion)
+	</td>
+	}
+			else if (item.FechaFin.Date > DateTime.Now && item.FechaDevolucion == null)
+			{
+	<tr>
+		<td class="alert alert-success">
+			@Html.DisplayFor(modelItem => item.LibroLibro.Titulo)
+		</td>
+		<td class="alert alert-success">
+			@Html.DisplayFor(modelItem => item.FechaInicio)
+		</td>
+		<td class="alert alert-success">
+			@Html.DisplayFor(modelItem => item.FechaFin)
+		</td>
+		<td class="alert alert-success">
+			@Html.DisplayFor(modelItem => item.FechaDevolucion)
+		</td>
+	</tr>
+			
+			}
+			else if (item.FechaDevolucion < DateTime.Now)
+			{
+
+	<td>
+		@Html.DisplayFor(modelItem => item.LibroLibro.Titulo)
+	</td>
+	<td>
+		@Html.DisplayFor(modelItem => item.FechaInicio)
+	</td>
+	<td>
+		@Html.DisplayFor(modelItem => item.FechaFin)
+	</td>
+	<td>
+		@Html.DisplayFor(modelItem => item.FechaDevolucion)
+	</td>
+
+			}
+		}
+		</tbody>
+	</table>
